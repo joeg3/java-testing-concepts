@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("When running library test")
-public class LibraryTest {
+public class BasicsTest {
     Library sut;
 
     @BeforeAll
@@ -73,11 +73,17 @@ public class LibraryTest {
 
     @Test
     void assertAllExample() {
+        // Group similar tests together. Also, instead of separate assert statements where
+        // if the first one fails, the others aren't run, here all three asserts are run
+        // so you can see if later asserts pass or fail.
+
+
+        Employee employee = new Employee("Jane", "Doe", 100000);
 
         assertAll(
-          () -> assertEquals(6, sut.multiplyNumbers(2, 3)),
-          () -> assertEquals(0, sut.multiplyNumbers(0, 3)),
-          () -> assertEquals(-8, sut.multiplyNumbers(2, -4))
+          () -> assertEquals("Jane", employee.getFirstName()),
+          () -> assertEquals("Doe", employee.getLastName()),
+          () -> assertEquals(100000, employee.getSalary())
         );
     }
 
