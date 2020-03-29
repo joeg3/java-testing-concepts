@@ -22,7 +22,7 @@ public class LibraryTest {
     @AfterEach
     void cleanupAfterEachTestInThisClass() { }
 
-    @Nested // Groups the tests within nested class as one test
+    @Nested // Groups the tests within nested class AddTest as one test
     @DisplayName("add method")
     class AddTest { // If say testAddNegative() fails, then AddTest also fails
         @Test
@@ -57,7 +57,7 @@ public class LibraryTest {
 
     @Test
     void testAddNumbers() {
-        assertEquals(5, sut.addNumbers(2, 3), "This message displayed if failure");
+        assertEquals(5, sut.addNumbers(2, 3), "This message only displayed if failure");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class LibraryTest {
     @Disabled
     @Test
     void testDisabled() {
-        fail("Test would normally fail, but we have it disabled");
+        fail("This test would normally fail, but we have it disabled");
     }
 
     @Test
@@ -81,11 +81,19 @@ public class LibraryTest {
         );
     }
 
+    @Test
+    void verifyNotTheSameInstance() {
+        String x = new String("Hi");
+        String y = new String("Hi");
+        assertEquals(x, y, "Variables x and y should have the same value.");
+        assertNotSame(x, y, "Variables x and y should not be the same instance.");
+    }
+
     @RepeatedTest(3) // Run this test 3 times
     void computeCircleArea(RepetitionInfo repetitionInfo) { // RepetitionInfo param is optional
         repetitionInfo.getCurrentRepetition(); // You can use RepetitionInfo object if you want
         assertEquals(314.1592653589793, sut.computeCircleArea(10),
-          "Should return right circle area");
+          "Should return correct circle area");
     }
 
     @Tag("it")

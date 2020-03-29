@@ -4,8 +4,8 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// TestInstance.Lifecycle.PER_METHOD is the default where the a new instance of TestInstanceTest is created for each @Test method
-//@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+// @TestInstance(TestInstance.Lifecycle.PER_METHOD) is the default where the a
+// new instance of TestInstanceTest is created for each @Test method.
 // You can change the default and have only one instance of TestInstanceTest created for all @Test methods
 // This is generally bad practice. However, if you do it, then the @BeforeAll method doesn't have to be static
 // and the count instance variable maintains state between each test.
