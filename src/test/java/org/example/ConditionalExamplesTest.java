@@ -4,7 +4,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.*;
 
 @DisplayName("ConditionalExamplesTest: Demonstrate how to conditionally run tests in JUnit 5")
 public class ConditionalExamplesTest {
@@ -42,10 +42,20 @@ public class ConditionalExamplesTest {
     public void disabledIfEnvironmentVariable() { }
 
     @Test
-    void showAssumptions() {
+    @DisplayName("Show assumeTrue() with value of false will skip test")
+    void runTestBasedOnAssumption() {
       // Instead of disabling a test with an annotation, we can also do it programmatically
-      boolean isServerUp = true;
+      boolean isServerUp = false;
       assumeTrue(isServerUp); // If server up, run test, otherwise skip it
+      fail("If assumeTrue() is false, we won't get to this line.");
+    }
+
+    @Test
+    @DisplayName("Show assumingThat() with value of true runs code and test will pass/fail")
+    void runCodeBasedOnAssumption() {
+        boolean isServerDown = true;
+        assumingThat(isServerDown, () -> System.out.println("If assumption valid, run this lambda"));
+        // Regardless if assumption valid or not, code execution will always continue here
     }
 
 
