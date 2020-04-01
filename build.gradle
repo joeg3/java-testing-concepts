@@ -9,6 +9,7 @@ repositories {
 dependencies {
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.6.1' // required for parameterized tests
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
@@ -23,6 +24,8 @@ test {
         }
     }
 
+    dependsOn 'cleanTest' // Always run tests, even when nothing changed.
+
     testLogging {
         // Log result for each test as they run
         events "passed", "skipped", "failed", "standardOut", "standardError"
@@ -30,5 +33,19 @@ test {
         // For test failures, instead of just showing the line number of failure on stdout,
         // also show assertion on why it failed
         exceptionFormat = 'full'
+
+        showStandardStreams = true // Show stdout and stderr of tests on console
+
+    }
+
+    // Show summary of test run
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\nTest result: ${result.resultType}"
+            println "Test summary: ${result.testCount} tests, " +
+                    "${result.successfulTestCount} succeeded, " +
+                    "${result.failedTestCount} failed, " +
+                    "${result.skippedTestCount} skipped"
+        }
     }
 }
