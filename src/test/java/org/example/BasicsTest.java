@@ -110,12 +110,12 @@ public class BasicsTest {
 
     @Tag("it")
     @Test
-    void testReportingDemo(TestReporter testReporter) {
+    void testReportingDemo(TestInfo info, TestReporter reporter) {
         // Not sure why I can't get this to work!
         //System.out.println("Running " + testInfo.getDisplayName() + " with tags " + testInfo.getTags());
         System.out.println("Before");
-        testReporter.publishEntry("Hello World!");
-        System.out.println("after");
+        reporter.publishEntry(info.getDisplayName());
+        System.out.println("After");
         //testReporter.publishEntry("Test Reporter: Running " + testInfo.getDisplayName() + " with tags " + testInfo.getTags());
     }
 }

@@ -35,7 +35,6 @@ test {
         exceptionFormat = 'full'
 
         showStandardStreams = true // Show stdout and stderr of tests on console
-
     }
 
     // Show summary of test run
