@@ -24,7 +24,11 @@ public class BasicsTest {
 
     @Nested // Groups the tests within nested class AddTest as one test
     @DisplayName("add method")
-    class AddTest { // If say testAddNegative() fails, then AddTest also fails
+    class AddTest { // If an inner fails, then AddTest also fails
+
+        @BeforeEach
+        void youCanHaveBeforeEachInNestedTest() {}
+
         @Test
         @DisplayName("when adding two positive numbers")
         // If this fails, it will display:  When running library test > add method > when adding two positive numbers should return the right sum
@@ -35,11 +39,7 @@ public class BasicsTest {
         @Test
         @DisplayName("when adding two negative numbers")
         void testAddNegative() {
-            // The message to assertEquals is processed regardless if test passes or fails. By changing it to a Lambda that
-            // returns a string, it will only be run if test fails, which is good if composing the string is an expensive operation
-            int expected = -5;
-            int actual = sut.addNumbers(-2, -3);
-            assertEquals(expected, actual, () -> "should return sum " + expected + " but returned " + actual);
+            assertEquals(-5, sut.addNumbers(-2, -3), "should return the right sum");
         }
 
         @Test
@@ -50,19 +50,36 @@ public class BasicsTest {
     }
 
     @Test
-    @DisplayName("Testing a library method that returns true") // This string is displayed instead of "testSomeLibraryMethod()"
-    void testSomeLibraryMethod() {
+    @DisplayName("Demonstrating @DisplayName") // This string is displayed instead of "testSomeLibraryMethod()"
+    void useDisplayNameAnnotation() {
         assertTrue(sut.libraryMethodReturnsTrue());
     }
 
     @Test
-    void testAddNumbers() {
+    @DisplayName("Examples of all the basic assertions")
+    void basicAssertions() {
+        int expected = -5;
+        int actual = sut.addNumbers(-2, -3);
+
+        // Can optionally add message on end of assertion
         assertEquals(5, sut.addNumbers(2, 3), "This message only displayed if failure");
+
+        // The message for assertions is processed regardless if test passes or fails (but only displayed if failure).
+        // For messages that are expensive to process, change to a lambda that returns a string, lambda will only be run if test fails
+        assertEquals(expected, actual, () -> "should return sum " + expected + " but returned " + actual);
+
+        assertNotEquals(6, sut.addNumbers(2, 3));
+        assertNull(null);
+        assertNotNull("This string is not null");
+        assertTrue(true);
+        assertFalse(false);
     }
 
+    //@Disabled("You can disable entire classes too")
     @Test
     void testExpectedException() {
-        assertThrows(ArithmeticException.class, () -> sut.divideNumbers(3, 0), "Divide by zero should throw exception");
+        Exception exception = assertThrows(ArithmeticException.class, () -> sut.divideNumbers(3, 0), "Divide by zero should throw exception");
+        assertEquals("/ by zero", exception.getMessage());
     }
 
     @Disabled
@@ -96,10 +113,9 @@ public class BasicsTest {
     }
 
     @RepeatedTest(3) // Run this test 3 times
+    @DisplayName("Repeated Test")
     void computeCircleArea(RepetitionInfo repetitionInfo) { // RepetitionInfo param is optional
-        repetitionInfo.getCurrentRepetition(); // You can use RepetitionInfo object if you want
-        assertEquals(314.1592653589793, sut.computeCircleArea(10),
-          "Should return correct circle area");
+        assertEquals(314.1592653589793, sut.computeCircleArea(10), "Iteration " + repetitionInfo.getCurrentRepetition() + " of " + repetitionInfo.getTotalRepetitions() + " should return correct circle area");
     }
 
     @Tag("it")
@@ -110,12 +126,14 @@ public class BasicsTest {
 
     @Tag("it")
     @Test
-    void testReportingDemo(TestInfo info, TestReporter reporter) {
-        // Not sure why I can't get this to work!
-        //System.out.println("Running " + testInfo.getDisplayName() + " with tags " + testInfo.getTags());
-        System.out.println("Before");
-        reporter.publishEntry(info.getDisplayName());
-        System.out.println("After");
-        //testReporter.publishEntry("Test Reporter: Running " + testInfo.getDisplayName() + " with tags " + testInfo.getTags());
+    void testReportingDemo(TestInfo testInfo) {
+        assertEquals("testReportingDemo(TestInfo)", testInfo.getDisplayName());
+        assertTrue(testInfo.getTags().contains("it"));
     }
+
+    @Test
+    void reportSingleValue(TestReporter testReporter) {
+        testReporter.publishEntry("Not sure why this text doesn't go to std out. Maybe because invoking test with Gradle, both from command line and Intellij");
+    }
+
 }

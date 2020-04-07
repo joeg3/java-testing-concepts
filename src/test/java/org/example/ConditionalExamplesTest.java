@@ -53,9 +53,10 @@ public class ConditionalExamplesTest {
     @Test
     @DisplayName("Show assumingThat() with value of true runs code and test will pass/fail")
     void runCodeBasedOnAssumption() {
-        boolean isServerDown = true;
-        assumingThat(isServerDown, () -> System.out.println("If assumption valid, run this lambda"));
+        boolean isServerUp = true;
+        assumingThat(isServerUp, () -> System.out.println("If assumption valid, run this lambda"));
         // Regardless if assumption valid or not, code execution will always continue here
+        assertEquals(4,4, "This will run even if assumingThat() is false");
     }
 
 

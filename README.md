@@ -29,6 +29,8 @@ From IntelliJ:
 - @RepeatedTest 
 
 ### Helpful Links
+- [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
+- [JUnit 5 Example Projects](https://github.com/junit-team/junit5-samples)
 - https://www.baeldung.com/junit-5-conditional-test-execution
 - https://www.youtube.com/watch?v=2E3WqYupx7c&list=PLqq-6Pq4lTTa4ad5JISViSb2FVG8Vwa4o
 - https://github.com/koushikkothagal/junit-5-basics-course
