@@ -4,12 +4,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("ParameterizedTests: ")
 public class ParameterizedExampleTest {
@@ -21,14 +26,21 @@ public class ParameterizedExampleTest {
   @AfterEach
   void afterEachCalledAfterEachParameterizedTestInvocation() {}
 
-  @ParameterizedTest(name = "test #{index} arg {0}}") // Displays: test #1 arg 0, test #2 arg -20, etc.
+  @ParameterizedTest(name = "ValueSource test #{index} => arg={0}}") // Displays: test #1 arg 0, test #2 arg -20, etc.
   @ValueSource(ints = { 0, -20, 30 }) // Value source can only be used on test methods with a single parameter
   @DisplayName("with @ValueSource")
   void parameterizedTestWithValueSource(int num) {
     assertEquals(0, num % 10);
   }
 
-  @ParameterizedTest(name = "{index} => color=''{0}''") // Pass in values of an enumeration
+  @ParameterizedTest(name = "Empty string test #{index} => arg=''{0}''")
+  @NullAndEmptySource // There are separate @NullSource and @EmptySource annotations too
+  @ValueSource(strings = { " ", "   ", "\t", "\n" })
+  void nullEmptyAndBlankStrings(String text) { // This example from JUnit 5 site
+    assertTrue(text == null || text.trim().isEmpty()); // This will be invoked 6 times: null, empty, and the 4 value source values
+  }
+
+  @ParameterizedTest(name = "Enum test #{index} => color=''{0}''") // Pass in values of an enumeration
   @EnumSource(Color.class)
   @DisplayName("with @EnumSource")
   void parameterizedTestWithEnumSource(Color color) {
