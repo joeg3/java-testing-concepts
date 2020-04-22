@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'checkstyle'
+    id "com.github.spotbugs" version "4.0.5"
 }
 
 repositories {
@@ -10,6 +11,9 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.6.1' // required for parameterized tests
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
+    spotbugs 'com.github.spotbugs:spotbugs:4.0.2'
+    spotbugs 'com.github.spotbugs:spotbugs-annotations:4.0.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
 }
 
@@ -44,10 +48,13 @@ test {
     }
 }
 
-checkstyle { // Runs tasks checkstyleMain and checkstyleTest when source code changes
+checkstyle { // We are using defaults and don't have to specify config dir, main and test source dirs or reports
     toolVersion = '8.31'
-    // You can specify the location of source and config files, but:
-    // I think the source parameter for the checkstyleMain and checkstyleTest tasks defaults to src/main/java and src/test/java respectively
-    // I think the config file defaults to <project_root>/config/checkstyle/checkstyle.xml
-    // Report should be in <project_root>/build/reports/checkstyle/main.html
+}
+
+spotbugsMain {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
 }
