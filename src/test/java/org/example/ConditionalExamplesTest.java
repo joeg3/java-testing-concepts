@@ -1,10 +1,24 @@
 package org.example;
 
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledForJreRange;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.JRE;
+import org.junit.jupiter.api.condition.OS;
 
 @DisplayName("ConditionalExamplesTest: Demonstrate how to conditionally run tests in JUnit 5")
 public class ConditionalExamplesTest {
@@ -54,7 +68,7 @@ public class ConditionalExamplesTest {
     @DisplayName("Show assumingThat() with value of true runs code and test will pass/fail")
     void runCodeBasedOnAssumption() {
         boolean isServerUp = true;
-        assumingThat(isServerUp, () -> System.out.println("If assumption valid, run this lambda"));
+        assumingThat(isServerUp, () -> assertTrue(true, "If server is up, run this check in lambda"));
         // Regardless if assumption valid or not, code execution will always continue here
         assertEquals(4,4, "This will run even if assumingThat() is false");
     }

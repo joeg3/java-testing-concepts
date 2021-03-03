@@ -3,6 +3,7 @@
 ###  Run tests
 From Command Line:
 - All tests: `./gradlew clean test`
+- Run one test: `./gradlew clean test --tests org.example.ParameterResolverTest.reportSingleValue`
 - Integration tests: `./gradlew clean test -Ptype=it`
 - Run only Checkstyle and SpotBugs: `./gradle check`.  This runs the `checkstyleMain, checkstyleTest, spotbugsMain, spotbugsTest` Gradle tasks. Gradle will not run the `check` task on subsequent runs if there haven't been any code changes.
 - Run only Checkstyle and SpotBugs even if already run, and without tests: `./gradlew clean check -x test`.

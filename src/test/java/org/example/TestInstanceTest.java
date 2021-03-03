@@ -1,8 +1,7 @@
 package org.example;
 
-import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 // @TestInstance(TestInstance.Lifecycle.PER_METHOD) is the default where the a
 // new instance of TestInstanceTest is created for each @Test method.

@@ -1,8 +1,26 @@
 package org.example;
 
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 @DisplayName("When running library test")
 public class BasicsTest {
@@ -112,28 +130,8 @@ public class BasicsTest {
         assertNotSame(x, y, "Variables x and y should not be the same instance.");
     }
 
-    @RepeatedTest(3) // Run this test 3 times
-    @DisplayName("Repeated Test")
-    void computeCircleArea(RepetitionInfo repetitionInfo) { // RepetitionInfo param is optional
-        assertEquals(314.1592653589793, sut.computeCircleArea(10), "Iteration " + repetitionInfo.getCurrentRepetition() + " of " + repetitionInfo.getTotalRepetitions() + " should return correct circle area");
-    }
-
     @Tag("it")
     @Test
     void expensiveIntegrationTest() {
-
     }
-
-    @Tag("it")
-    @Test
-    void testReportingDemo(TestInfo testInfo) {
-        assertEquals("testReportingDemo(TestInfo)", testInfo.getDisplayName());
-        assertTrue(testInfo.getTags().contains("it"));
-    }
-
-    @Test
-    void reportSingleValue(TestReporter testReporter) {
-        testReporter.publishEntry("Not sure why this text doesn't go to std out. Maybe because invoking test with Gradle, both from command line and Intellij");
-    }
-
 }
